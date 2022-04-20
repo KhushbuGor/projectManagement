@@ -1,0 +1,57 @@
+<%= form_with(model: project) do |form| %>
+  <% if project.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+        <% project.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-12">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-12">
+      <%= form.label :description, class: "form-label" %>
+      <%= form.text_area :description, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-12">
+      <%= form.label "Expected Ending date", class: "form-label" %>
+      <%= form.date_select :endingdate, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-12">
+      <%= form.label :client, class: "form-label" %>
+      <%= form.select :client_id , @client, selected: params[:selected_value] %>
+    </div>
+  </div>
+
+  <% if current_user.has_role?(:admin) %>
+    <div class="row mt-2">
+      <div class="col-12">
+        <%= form.label :manager %>
+        <%= form.select :creator_id , @manager, :selected => params[:selected_manager] %>
+      </div>
+    </div>
+  <% else %>
+    <%= form.hidden_field  :creator_id, value:current_user.id%>
+  <% end %>
+
+  <div class="row mt-3 justify-content-end">
+    <%= form.submit class: 'btn btn-success mr-2' %>
+    <%= link_to 'Back', projects_path, class: 'btn btn-info mr-2' %>
+  </div>
+<% end %>

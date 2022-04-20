@@ -1,0 +1,36 @@
+<h2 class="head-text mt-6">Update User</h2>
+ 
+ <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+  <%=image_tag( user_image(@user), :style=>"height:200px") %>
+</button> 
+
+<div id="info">
+       <%= render "info",user: @user %>
+</div>
+
+<%# for edit image  %>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+        <%= render "user_image",user: @user %>
+
+    </div>
+  </div>
+</div>
+<script>
+function changeToform() {
+  $("#info").html("<%= escape_javascript(render partial: 'form_fields', locals: { user: @user } )  %>")
+}
+function changeToinfo() {
+  $("#info").html("<%= escape_javascript(render partial: 'info', locals: { user: @user } )  %>")  
+}
+ //  
+
+</script>

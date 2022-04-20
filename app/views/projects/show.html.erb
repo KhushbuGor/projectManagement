@@ -1,0 +1,74 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<div class="row">
+  <div class="col-12 text-right">
+    <%= link_to "Kanban", kanban_project_task_index_path(@project),class:"btn btn-outline-primary" unless current_user.has_role? "customer"%>
+    <%= link_to "Tasks", project_task_index_path(@project),class:"btn btn-outline-dark"%>
+    <%= link_to "My Assigned issues", my_issue_issues_path(@project),class:"btn btn-outline-secondary" %>
+    <%= link_to "Create Sprint", new_project_sprint_path(@project), class: "btn btn-outline-success mr-1" if can? :create, @project %>
+    <%= link_to "Create issue", new_issue_path(@project), class: "btn btn-outline-danger mr-1" if can? :create, @project %>
+    <%= link_to "Show issues", issues_path(@project), class: "btn btn-outline-warning mr-1" %>
+    <%= link_to "Back", projects_path, class: "btn btn-outline-info mr-3" %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 mt-5"><h4><%= @project.name %></h4></div>
+  <div class="col-12 mt-3 text-muted"><%= @project.description %></div>
+  <div class="col-12 mt-3"><b>Status: </b><%= @project.status %></div>
+  <% if can? :project_status, @project %>
+    <div class="col-12 mt-3">
+      <b>Change to: </b>
+      <% if @project.status=="completed" &&(can? :project_status, @project) %>
+         <%= link_to "Ongoing", project_status_projects_path(@project,status: false) if can? :project_status, @project %>
+      <% else %>
+         <%= link_to "Completed", project_status_projects_path(@project,status: true),class:"text-success" if can? :project_status, @project %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<% if @project.status=="completed" && @project.client_id==current_user.id %>
+  <%= link_to "Review And Rating", review_rating_projects_path(@project) if can? :review_rating, @project %>
+<% end %>
+<br>
+
+<canvas id="myChart" style="width:50%;max-width:600px"></canvas>  
+<div class="row">
+  <div class="col-12">
+    <h2>All Sprints</h2>
+    
+<div class="row m-4" >
+    <% @sprint.each do |sprint| %>
+
+      <%= render 'sprint', sprint: sprint, project: @project %>
+    <% end %>
+  </div>
+  </div>
+</div>
+
+<script>
+var xValues = ["In Progess", "Completed"];
+var yValues = [<%=@ongoing%>, <%= @completed%>];
+var barColors = [
+  "#b91d47",
+  "#00aba9"
+];
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "All Task Status"
+    }
+  }
+});
+</script>

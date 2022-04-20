@@ -1,0 +1,58 @@
+
+    <div class="container">
+
+       
+<div class="card" style="width: auto;  border-radius: 25px;">
+  <div class="card-body " style="background-color: #b4b4b4 ; border-radius: 25px;">
+
+                  <div id="<%= dom_id issue %>">
+                    
+                  <h2 class="card-title">
+                    <p>
+                      <%= issue.title.capitalize %>
+                    </p>
+                    </h2>
+                      <p>
+                      <strong>Project :</strong>
+                      <%=Project.find_by(id:issue.project_id).name.capitalize %>
+                    </p>
+                    <p>
+                      <strong>Description:</strong>
+                      <%= issue.description.capitalize[0..100] %>
+                    </p>
+
+                    <p>
+                      <strong>Type:</strong>
+                      <% if (issue.issue_type=="Bug") %>
+                      <span class="badge badge-pill badge-warning">Bug</span>
+                      <% elsif (issue.issue_type=="Error") %>
+                      <span class="badge badge-pill badge-danger">Error</span>
+                      <%else%>
+                        <span class="badge badge-pill badge-info">issue.issue_type</span>
+                      
+                      <%end%>
+                    </p>
+
+                    <p>
+                      <strong>Status:</strong>
+                      <%= issue.status %>
+                    </p>
+
+                    <p>
+                      <strong>Employee:</strong>
+                      <%if issue.employee_id==nil%>
+                      <span style="color:red">Not Assign</span>
+                      <%else%>
+                      <span style="color:green">
+                      <%= User.find_by(id:issue.employee_id).name %></span>
+                      <%end%>
+                      
+                    </p>
+
+                  </div>
+    
+    
+  </div>
+</div>
+    
+</div>
