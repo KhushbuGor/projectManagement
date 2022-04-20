@@ -15,9 +15,11 @@
 </head>
 
   <body>
+  <% if user_signed_in? %>
     <%= render "layouts/navbar" %>
-    <p class="p-1 text-success"><%= notice %></p>
-    <div class="container-fluid mb-5">
+  <% end %>
+    <p class="text-success m-0"><%= notice %></p>
+    <div class="">
       <%= yield %>
     </div>
     <%# <%= render "layouts/footer" %>

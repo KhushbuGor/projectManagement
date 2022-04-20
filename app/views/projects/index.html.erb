@@ -1,18 +1,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
-<div class="row">
-  <div class="col-3">
+<div class="p-2">
+<div class="d-flex justify-content-between" style="max-height: 2.4em;">
     <h1>Projects</h1>
-  </div>
-  <div class="col-9">
     <%= link_to 'New project', new_project_path, class: 'btn btn-outline-primary' if can? :create, Project %>
-  </div>
 </div>
 <div class="row">
   <div class="col-3">
     <canvas id="myChart" style="width:50%;max-width:600px"></canvas>
   </div>
-  <div class="col-9">
+  <div class="">
     <div class="row">
       <% @projects.each do |project| %>
         <%
@@ -23,6 +20,7 @@
       <% end %>
     </div>
   </div>
+</div>
 </div>
 
 <% completed = Project.where(status: "completed").count

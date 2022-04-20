@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:rubysherpas/paranoia.git
+  remote: https://github.com/rubysherpas/paranoia.git
   revision: c0d1d9a3478bea09feb529d2dc0eb8c9b8d7e805
   branch: core
   specs:
@@ -326,4 +326,4 @@ RUBY VERSION
    ruby 3.0.0p0
 
 BUNDLED WITH
-   2.3.9
+   2.3.6
